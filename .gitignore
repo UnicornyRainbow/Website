@@ -1,3 +1,7 @@
+# for reflex
+*.db
+.web
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
