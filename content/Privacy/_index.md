@@ -29,12 +29,12 @@ Unsere Datenschutzerklärung ist wie folgt gegliedert:
 Verantwortlicher Anbieter dieses Internetauftritts im datenschutzrechtlichen Sinne ist:
 
 {% legal() %}\{% end %}
-E-Mail: unicornyraibow@posteo.de
+E-Mail: unicornyrainbow@posteo.de
 
 Datenschutzbeauftragte/r beim Anbieter ist:
 
 {% legal() %}\{% end %}
-E-Mail: unicornyraibow@posteo.de
+E-Mail: unicornyrainbow@posteo.de
 
 ### II. Rechte der Nutzer und Betroffenen
 
@@ -193,12 +193,12 @@ Our privacy policy is structured as follows:
 The party responsible for this website (the „controller“) for purposes of data protection law is:
 
 {% legal() %}\{% end %}
-E-Mail: unicornyraibow@posteo.de
+E-Mail: unicornyrainbow@posteo.de
 
 The controller’s data protection officer is:
 
 {% legal() %}\{% end %}
-E-Mail: unicornyraibow@posteo.de
+E-Mail: unicornyrainbow@posteo.de
 
 ### II. The rights of users and data subjects
 
