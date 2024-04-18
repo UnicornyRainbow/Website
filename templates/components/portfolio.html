@@ -1,0 +1,11 @@
+{% macro card(pretty_title, url, description, image, image_radius="large", image_alt=false) %}
+<a href="{{ url }}">
+    <div class="card card_image_radius_{{ image_radius }}">
+        <img src="{{ image }}" loading="lazy" {% if image_alt %}alt="{{ image_alt }}"{% endif %}/>
+        <div>
+            <h3>{{ pretty_title }}</h3>
+            <p>{{ description }}</p>
+        </div>
+    </div>
+</a>
+{% endmacro card %}
