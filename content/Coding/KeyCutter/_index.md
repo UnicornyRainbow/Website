@@ -15,7 +15,7 @@ It uses <a class="external" href="https://docs.python.org/3/library/secrets.html
 Users are able to choose what characters they want to use.\
 The app is NOT intended to replace your password manager but as a backup solution if the integrated password generator in, for example, Firefox doesn't recognize the password field or you need to generate a password for an app where you can't use your password manager.
 
-Get the source code on <a class="external" href="https://github.com/UnicornyRainbow/KeyCutter" target="_blank">GitHub</a>.
+Get the source code on <a class="external" href="https://github.com/UnicornyRainbow/Secrets" target="_blank">GitHub</a>.
 
 ***
 
