@@ -57,8 +57,8 @@ a.external:after {
     display: inline-flex;
     height: 0.7em;
     margin-left: 4px;
-    -webkit-mask-image: url(/static/external.svg);
-    mask-image: url(/static/external.svg);
+    -webkit-mask-image: url(/img/external.svg);
+    mask-image: url(/img/external.svg);
     -webkit-mask-size: cover;
     mask-size: cover;
     width: 0.7em;
