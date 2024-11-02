@@ -14,9 +14,9 @@
 ;     You should have received a copy of the GNU Affero General Public License
 ;     along with this program.  If not, see <https://www.gnu.org/licenses/agpl.html>.
 (defproject website "0.1.0"
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
-  :license {:name "OR AGPL-2.0-or-later WITH Classpath-exception-2.0"
+  :description "Unicorns Website"
+  :url "http://unicornyrainbow.org"
+  :license {:name "AGPL-2.0-or-later WITH Classpath-exception-2.0"
             :url "https://www.gnu.org/licenses/agpl.html"}
   :dependencies [[org.clojure/clojure "1.11.1"]
                  [ring/ring-core "1.9.6"]
@@ -27,4 +27,5 @@
   :main ^:skip-aot website.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all
-                       :jvm-opts ["-Dclojure.compiler.direct-linking=true"]}})
+                       :jvm-opts ["-Dclojure.compiler.direct-linking=true"]
+                       :uberjar-name "website.jar"}})
