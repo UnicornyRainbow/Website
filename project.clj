@@ -13,7 +13,7 @@
 ;
 ;     You should have received a copy of the GNU Affero General Public License
 ;     along with this program.  If not, see <https://www.gnu.org/licenses/agpl.html>.
-(defproject website "0.1.0-SNAPSHOT"
+(defproject website "0.1.0"
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
   :license {:name "OR AGPL-2.0-or-later WITH Classpath-exception-2.0"
