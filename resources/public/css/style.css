@@ -9,11 +9,15 @@
     --transition-fast: 200ms;
     --transition-slow: 400ms;
 
-    /* Default (light) theme 44692D*/
+    /* Default (light) theme*/
     --bg: #ebd5c7;
     --accent: #4E604E;
-    --accent-contrast: #FFFFFF;
+    --accent-contrast: #F1E6DF;
     --contrast: #3C3CFF;
+    --warn: red;
+
+    --font: #000;
+    --font-reduced: rgba(0, 0, 0, 70%);
 
     font-family: sans-serif;
     font-size: medium;
@@ -30,45 +34,45 @@ body {
 
 footer {
     padding-top: var(--padding);
-    opacity: 0.6;
+    color: var(--font-reduced);
 }
 
 a {
     text-decoration: none;
-}
 
-main a, footer a {
-    color: var(--contrast);
-    transition: all var(--transition-fast);
-    padding: 2px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-main a:hover, footer a:hover {
-    background-color: var(--accent);
-    color: var(--accent-contrast);
-    transition: all var(--transition-fast);
-}
-
-a.external:after {
-    background-color: var(--contrast);
-    content: "";
-    display: inline-flex;
-    height: 0.7em;
-    margin-left: 4px;
-    -webkit-mask-image: url(/img/external.svg);
-    mask-image: url(/img/external.svg);
-    -webkit-mask-size: cover;
-    mask-size: cover;
-    width: 0.7em;
-}
-a.external:hover:after {
-    background-color: var(--accent-contrast);
+    &.external {
+        &:after {
+            background-color: var(--contrast);
+            content: "";
+            display: inline-flex;
+            height: 0.7em;
+            margin-left: 4px;
+            -webkit-mask-image: url(/img/external.svg);
+            mask-image: url(/img/external.svg);
+            -webkit-mask-size: cover;
+            mask-size: cover;
+            width: 0.7em;
+        }
+        &:hover:after {
+            background-color: var(--accent-contrast);
+        }
+    }
 }
 
 main, footer {
     margin: 0px calc(var(--padding) / 2);
+    a {
+        color: var(--contrast);
+        transition: all var(--transition-fast);
+        padding: 2px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    a:hover {
+        background-color: var(--accent);
+        color: var(--accent-contrast);
+        transition: all var(--transition-fast);
+    }
 }
 
 h1 {
@@ -82,51 +86,58 @@ code {
 .grid {
     display: grid;
     grid-gap: var(--padding);
-}
 
-.auto-fill {
-    /*grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));*/
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-}
-
-.auto-fit {
-    /*grid-template-columns: repeat(auto-fill, calc(1fr - var(--padding)));*/
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    &.auto-fill {
+        /*grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));*/
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+    &.auto-fit {
+        /*grid-template-columns: repeat(auto-fill, calc(1fr - var(--padding)));*/
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
 }
 
 .card {
     background: var(--accent);
     border-radius: calc(var(--border-radius)*2);
     padding-bottom: calc(var(--border-radius)*2);
-    color: black;
+    color: var(--accent-contrast);
     cursor: pointer;
     height: 100%;
-}
 
-.card_image_radius_large {
-    border-radius: calc(var(--border-radius)*3);
-}
+    img {
+        border-radius: calc(var(--border-radius)*2) calc(var(--border-radius)*2) 0px 0px;
+        width: 100%;
+    }
+    div {
+        margin: calc(var(--padding)/2);
+    }
+    h3 {
+        margin-top: 0;
+    }
 
-.card img {
-    border-radius: calc(var(--border-radius)*2) calc(var(--border-radius)*2) 0px 0px;
-    width: 100%;
-}
-
-.card div {
-    margin: calc(var(--padding)/2);
-}
-
-.card h3 {
-    margin-top: 0;
+    &.card_image_radius_large {
+        border-radius: calc(var(--border-radius)*3);
+    }
 }
 
 .no-hover-color:hover {
     background: none;
 }
 
+.error {
+    color: var(--warn);
+}
+
 @media prefers-reduced-motion {
-    main a, footer a, main a:hover, footer a:hover{
-        transition: none;
+    main, footer {
+        a {
+            transition: none;
+
+            &:hover {
+                transition: none;
+            }
+        }
     }
 }
 

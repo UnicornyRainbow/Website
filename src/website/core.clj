@@ -15,7 +15,7 @@
 ;     along with this program.  If not, see <https://www.gnu.org/licenses/agpl.html>.
 
 (ns website.core
-  (:require [compojure.core :refer [defroutes GET]]
+  (:require [compojure.core :refer [defroutes GET POST]]
             [compojure.route :as route]
             [ring.adapter.jetty :as jetty]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
@@ -28,6 +28,8 @@
     (pages/home))
   (GET "/Contact" []
     (pages/contact))
+  (POST "/Contact" [subject email message consent]
+    (pages/contact subject email message consent))
   (GET "/Licenses" []
     (pages/licenses))
   (GET "/Legal" []
@@ -49,7 +51,7 @@
    (pages/not-found)))
 
 (def app
-  (wrap-defaults #'app-routes site-defaults))
+  (wrap-defaults #'app-routes (assoc site-defaults :proxy true :seesion false)))
 
 (defn -main []
   (let [port (parse-long (or (System/getenv "PORT")

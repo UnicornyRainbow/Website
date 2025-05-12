@@ -1,5 +1,7 @@
 (ns website.pages
-  (:require [website.components :as components]))
+  (:require [website.components :as components]
+            [website.backend :as functions]
+            [ring.util.anti-forgery :as util]))
 
 (defn not-found []
   (components/body
@@ -47,22 +49,52 @@
    [:div
     [:h1 "Under Construction..."]])) ; TODO
 
-(defn contact []
-  (components/body
-   "Contact"
-   ""
-   "https://unicornyrainbow.org/Contact"
-   "UnicornyRainbow - Contact"
-   "Contact Unicorny"
-   [:div {:class "grid auto-fit"}
-    [:img {:src "/img/me.png"
-           :style "width: 100%; border-radius: calc(var(--border-radius)*2);"
-           :loading "lazy"
-           :alt "Unicorn's profile picture. A small elf with shoulder length, brown hair, pointy ears, clip on cat ears, glasses, a choker and two pride pins with the nonbinary and pan flags"}]
-    [:div
-     [:p "You can contact me under me using "
-      [:a {:class "external" :href "mailto:contact@unicornyrainbow.org"} "mail"]]
-     [:h1 "Contact form under construction"]]]))
+(defn contact
+  ([] (contact "" "" "" false))
+  ([subject email message consent]
+   (let [mail-result (if consent (functions/send-mail subject email message) {:code 0, :error :SUCCESS, :message "no messages sent"})] ;; will be something like {:code 0, :error :SUCCESS, :message "messages sent"} TODO
+     (components/body
+      "Contact"
+      ""
+      "https://unicornyrainbow.org/Contact"
+      "UnicornyRainbow - Contact"
+      "Contact Unicorny"
+      [:div {:class "grid auto-fit"}
+       [:img {:src "/img/me.png"
+              :style "width: 100%; border-radius: calc(var(--border-radius)*2);"
+              :loading "lazy"
+              :alt "Unicorn's profile picture. A small elf with shoulder length, brown hair, pointy ears, clip on cat ears, glasses, a choker and two pride pins with the nonbinary and pan flags"}]
+       [:div
+        [:form {:id "contact-form" :method "post" :action "/Contact"}
+         (util/anti-forgery-field)
+         [:label {:class "mandatory" :for "subject"} "Subject"
+          [:input {:id "subject" :type "text" :name "subject" :required "required" :aria-required true :value subject}]]
+         [:label {:for "email"} "E-Mail Address"
+          [:input {:id "email" :type "email" :name "email" :value email}]]
+         [:label {:class "mandatory" :for "message"} "Message"
+          [:textarea {:id "message" :name "message" :required "required" :aria-required true :rows 10 :autocomplete "off" :value message}]]
+         [:label {:class "mandatory" :for "consent"}
+          [:input {:id "consent" :type "checkbox" :name "consent" :required "required" :aria-required true (when consent :checked) (when consent "checked")}]
+          "I understand and consent to how my data entered here is processed and stored in order to sent the message according to "
+          [:a {:href "/Privacy"} "the privacy statement"] "."]
+         [:div [:input {:type "submit" :value "Send"}]]
+         (when (not= (get mail-result :code) 0)
+          [:div
+           [:p {:class "error"} "Sorry - There was an error sending your mail."]
+           [:p
+            [:span {:class "error"} "Error: "] (get mail-result :error)
+            [:span {:class "error"} " Message: "] (get mail-result :message)]])]
+        [:p "Alternatively, feel free to "
+         [:a {:class "external" :href "mailto:contact@unicornyrainbow.org"} "mail"]
+         " me directly."]]
+       [:script "
+window.onbeforeunload = function () {
+    sessionStorage.setItem('message-save', document.getElementById('message').value);
+}
+window.onload = function () {
+    document.getElementById('message').value = sessionStorage.getItem('message-save');
+}"]]))))
+   
 
 (defn licenses []
   (components/body
@@ -212,7 +244,29 @@
        [:p "Plausible Insights OÜ" [:br]
         "Västriku tn 2, 50403, Tartu, Estonia"]
        [:p "Vertreten durch: Uku Täht" [:br]
-        "E-Mail: hello@plausible.io"]]]
+        "E-Mail: hello@plausible.io"]]
+      [:h4 "Resend"]
+      [:div
+       [:p "Für die funktionalität des Kontaktformulars benutzen wir Resend"]
+       [:p "Von Resend werden lediglich die Daten verarbeitet, die Sie im Kontaktformular angeben. Das betrifft folgende Daten:"
+        [:ul
+         [:li "Betreff"]
+         [:li "Nachricht"]
+         [:li "E-Mail Adresse (optional)"]]]
+       [:p "Resend stellt folgende Informationen bereit:"
+        [:ul
+         [:li "Privacy Policy: " [:a {:class "external"
+                                      :href "https://resend.com/legal/privacy-policy"
+                                      :target "_blank"}
+                                  "https://resend.com/legal/privacy-policy"]]
+         [:li "Data Processing Addendum: " [:a {:class "external"
+                                                :href "https://resend.com/legal/dpa"
+                                                :target "_blank"}
+                                            "https://resend.com/legal/dpa"]]
+         [:li "GDPR: " [:a {:class "external"
+                                      :href "https://resend.com/security/gdpr"
+                                      :target "_blank"}
+                                  "https://resend.com/security/gdpr"]]]]]]
      [:p
       [:a {:class "external"
            :href "https://www.generator-datenschutzerklärung.de"
@@ -320,7 +374,29 @@
        [:p "Plausible Insights OÜ" [:br]
         "Västriku tn 2, 50403, Tartu, Estonia"]
        [:p "Represented by: Uku Täht" [:br]
-        "E-Mail: hello@plausible.io"]]]
+        "E-Mail: hello@plausible.io"]]
+      [:h4 "Resend"]
+      [:div
+       [:p "We use Resend for the functionality of our contact form"]
+       [:p "Resend only processes the data entered in the contact form. This affects following data:"
+        [:ul
+         [:li "Subject"]
+         [:li "Message"]
+         [:li "Email address (optional)"]]]
+       [:p "Resend provides following privacy information::"
+        [:ul
+         [:li "Privacy Policy: " [:a {:class "external"
+                                      :href "https://resend.com/legal/privacy-policy"
+                                      :target "_blank"}
+                                  "https://resend.com/legal/privacy-policy"]]
+         [:li "Data Processing Addendum: " [:a {:class "external"
+                                                :href "https://resend.com/legal/dpa"
+                                                :target "_blank"}
+                                            "https://resend.com/legal/dpa"]]
+         [:li "GDPR: " [:a {:class "external"
+                            :href "https://resend.com/security/gdpr"
+                            :target "_blank"}
+                        "https://resend.com/security/gdpr"]]]]]]
      [:p
       [:a {:class "external"
            :href "https://www.generator-datenschutzerklärung.de"

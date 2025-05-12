@@ -23,9 +23,11 @@
                  [ring/ring-jetty-adapter "1.9.6"]
                  [ring/ring-defaults "0.3.4"]
                  [compojure/compojure "1.7.0"]
-                 [hiccup/hiccup "1.0.5"]]
+                 [hiccup/hiccup "1.0.5"]
+                 [com.draines/postal "2.0.5"]]
   :main ^:skip-aot website.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all
                        :jvm-opts ["-Dclojure.compiler.direct-linking=true"]
-                       :uberjar-name "website.jar"}})
+                       :uberjar-name "website.jar"}
+             :dev {:dependencies [[org.clojure/tools.namespace "1.5.0"]]}})

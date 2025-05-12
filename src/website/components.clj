@@ -7,7 +7,8 @@
    [:meta {:charset "UTF-8"}]
    [:meta {:http-equiv "content-type" :content "text/html; charset=utf-8"}]
    [:meta {:http-equiv "X-UA-Compatible" :content "IE=edge"}]
-   [:meta {:name "viewport" :content "width=device-width, initial-scale=1"}] 
+   [:meta {:name "viewport" :content "width=device-width, initial-scale=1"}]
+   [:meta {:http-equiv "content-language" :content "en"}]
    [:title title]
    [:link {:rel "canonical" :href permalink}]
    [:meta {:property "og:url" :content permalink}]
@@ -27,7 +28,7 @@
    (when (= (System/getenv "ENVIRONMENT") "RELEASE")
     [:script {:defer "defer" :data-domain "unicornyrainbow.org" :src "https://plausible.unicornyrainbow.org/js/script.js"}])
    [:link {:rel "shortcut icon" :type "image/png" :href "/img/me.png?"}]
-   (page/include-css "/css/style.css" "/css/header-style.css")])
+   (page/include-css "/css/style.css" "/css/header-style.css" "/css/form.css")])
 
 (defn header [title subpages current-subpage]
   [:header
@@ -35,6 +36,7 @@
     [:a {:href "/"}
      [:img {:class "logo" :src "/img/me.png" :alt "Unicorn's profile picture" :title "Home"}]]
     [:input {:type "checkbox" :class "nav-toggle" :id "nav-toggle"}]
+    [:label {:class "nav-toggle-label" :for "nav-toggle"} [:span]]
     [:h1 title]
     [:nav
      [:ul
@@ -51,9 +53,9 @@
   [:footer
    [:hr]
    [:div {:class "grid auto-fill"}
-    [:a {:href "/Privacy"} "Privacy / Datenschutzerklärung"]
-    [:a {:href "/Licenses"} "Technology / Licenses"]
-    [:a {:href "/Legal"} "Legal Info / Impressum"]]
+    [:div [:a {:href "/Privacy"} "Privacy / Datenschutzerklärung"]]
+    [:div [:a {:href "/Licenses"} "Technology / Licenses"]]
+    [:div [:a {:href "/Legal"} "Legal Info / Impressum"]]]
    [:p
     "My profile picture is made with the "
     [:a {:class "external" :href "https://picrew.me/image_maker/626197/" :target "_blank"} "character maker"]
